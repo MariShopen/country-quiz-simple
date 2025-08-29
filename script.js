@@ -72,6 +72,11 @@ async function createQuizQuestions() {
 }
 
 // --- Event Handlers (attached to window) ---
+window.handleQuestionClick = (id) => {
+  state.questionId = id;
+  render();
+};
+
 window.handleUserAnswer = (answer) => {
   const currentQuestion = state.quizQuestions[state.questionId];
   if (currentQuestion.options.disabled) return;
@@ -141,3 +146,13 @@ function render() {
 
   appContainer.innerHTML = mainContent;
 }
+
+// --- Initial Load ---
+async function initializeApp() {
+  render(); // Initial render with loading state
+  state.quizQuestions = await createQuizQuestions();
+  state.isLoading = false;
+  render();
+}
+
+initializeApp();
