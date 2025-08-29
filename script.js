@@ -2,6 +2,7 @@ import { countries as localCountries } from "./data/countries.js";
 import { Congrats } from "./components/Congrats.js";
 import { QuestionButton } from "./components/QuestionButton.js";
 import { QuestionComponent } from "./components/QuestionComponent.js";
+import { GameStats } from "./components/GameStats.js";
 
 // --- State ---
 let state = {
@@ -12,6 +13,9 @@ let state = {
 
 const appContainer = document.getElementById("app");
 
+const STATS_KEY = "countryQuizHistory";
+const MAX_HISTORY_LENGTH = 5;
+
 // --- Helper Functions ---
 const shuffle = (array) => {
   for (let i = array.length - 1; i > 0; i--) {
@@ -19,6 +23,34 @@ const shuffle = (array) => {
     [array[i], array[j]] = [array[j], array[i]];
   }
   return array;
+};
+
+const getGameHistory = () => {
+  try {
+    const history = localStorage.getItem(STATS_KEY);
+    return history ? JSON.parse(history) : [];
+  } catch (e) {
+    console.error("Failed to parse game history:", e);
+    return [];
+  }
+};
+
+const saveGameResult = (correctCount, name) => {
+  const history = getGameHistory();
+  const newResult = {
+    score: `${correctCount}/10`,
+    name: name || "hero",
+  };
+
+  // Add to the front
+  history.unshift(newResult);
+
+  // Trim to max length
+  if (history.length > MAX_HISTORY_LENGTH) {
+    history.pop();
+  }
+
+  localStorage.setItem(STATS_KEY, JSON.stringify(history));
 };
 
 const generateIncorrectAnswers = (allCountryNames, correctAnswer) => {
@@ -104,10 +136,15 @@ window.handleSaveAndRestart = async () => {
   const playerName =
     (playerNameInput ? playerNameInput.value.trim() : "") || "hero";
 
-  // saveGameResult(correctAnswered, playerName);
+  saveGameResult(correctAnswered, playerName);
 
   // Now restart the game
   await handleRestart();
+};
+
+window.handleClearStats = () => {
+  localStorage.removeItem(STATS_KEY);
+  render();
 };
 
 // --- Render Function ---
@@ -158,7 +195,24 @@ function render() {
         `;
   }
 
-  appContainer.innerHTML = mainContent;
+  const history = getGameHistory();
+  const statsHtml = history.length > 0 ? GameStats({ history }) : "";
+
+  appContainer.innerHTML = `${mainContent}${statsHtml}`;
+
+  // After rendering, if the congrats screen is visible, attach the listener
+  if (isCompleted && !isLoading) {
+    const playerNameInput = document.getElementById("playerNameInput");
+    if (playerNameInput) {
+      playerNameInput.focus(); // Automatically focus the input for better UX
+      playerNameInput.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+          event.preventDefault(); // Prevent default form submission behavior
+          handleSaveAndRestart();
+        }
+      });
+    }
+  }
 }
 
 // --- Initial Load ---
