@@ -1,5 +1,12 @@
 import { QuestionComponent } from "./components/QuestionComponent.js";
 
+// --- State ---
+let state = {
+  questionId: 0,
+  isLoading: true,
+  quizQuestions: [],
+};
+
 const appContainer = document.getElementById("app");
 
 // --- Helper Functions ---
@@ -59,4 +66,55 @@ async function createQuizQuestions() {
     appContainer.innerHTML = `<div class="quiz-container-wrapper"><div class="error">Failed to load questions.</div></div>`;
     return [];
   }
+}
+
+// --- Render Function ---
+function render() {
+  const { isLoading, quizQuestions, questionId } = state;
+
+  const isCompleted =
+    quizQuestions.length > 0 &&
+    quizQuestions.every((q) => q.options.answered != null);
+
+  let mainContent;
+
+  if (isLoading) {
+    mainContent = `<div class="quiz-container-wrapper"><div class="loading">Loading...</div></div>`;
+  } else if (isCompleted) {
+    const correctAnswered = quizQuestions.filter(
+      (q) => q.options.answered === q.options.correct
+    ).length;
+    mainContent = `<div class="quiz-container-wrapper">${Congrats({
+      correctAnswered,
+    })}</div>`;
+  } else {
+    const questionButtonsHtml = Array.from({ length: 10 })
+      .map((_, i) =>
+        QuestionButton({
+          number: i + 1,
+          isActive:
+            questionId === i ||
+            quizQuestions[i]?.options.answered !== undefined,
+        })
+      )
+      .join("");
+    const questionComponentHtml = QuestionComponent({
+      questionData: quizQuestions[questionId],
+    });
+    mainContent = `
+            <div class="quiz-container-wrapper">
+                <div class="quiz-container">
+                    <div class="quiz-header">
+                        <div class="quiz-title">Country Quiz</div>
+                        <div class="question-buttons">
+                            ${questionButtonsHtml}
+                        </div>
+                    </div>
+                    ${questionComponentHtml}
+                </div>
+            </div>
+        `;
+  }
+
+  appContainer.innerHTML = mainContent;
 }
