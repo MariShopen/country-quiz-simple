@@ -1,0 +1,37 @@
+:root {
+  --blue-bg: #2e405b; /* background */
+  --font-color: #e0e0e0; /* text */
+  --blue-2: #344966; /* Main quiz container background */
+  --blue-3: #3f5778; /* Button background */
+  --gradient-1: #d175a0;
+  --gradient-2: #cd5d91;
+  --correct-color: var(--gradient-1); /* Accent for correct answers */
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  margin: 0;
+  background-color: var(--gray-bg);
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  min-width: 100%;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 0;
+  box-sizing: border-box;
+}
+
+.quiz-container-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1280px;
+  height: 720px;
+  background-color: var(--blue-bg);
+  background-size: cover;
+  background-position: center;
+}
