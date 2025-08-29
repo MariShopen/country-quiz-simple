@@ -1,3 +1,6 @@
+import { countries as localCountries } from "./data/countries.js";
+import { Congrats } from "./components/Congrats.js";
+import { QuestionButton } from "./components/QuestionButton.js";
 import { QuestionComponent } from "./components/QuestionComponent.js";
 
 // --- State ---
@@ -67,6 +70,26 @@ async function createQuizQuestions() {
     return [];
   }
 }
+
+// --- Event Handlers (attached to window) ---
+window.handleUserAnswer = (answer) => {
+  const currentQuestion = state.quizQuestions[state.questionId];
+  if (currentQuestion.options.disabled) return;
+
+  currentQuestion.options.answered = answer;
+  currentQuestion.options.disabled = true;
+
+  render();
+};
+
+window.handleRestart = async () => {
+  state.isLoading = true;
+  render();
+  state.quizQuestions = await createQuizQuestions();
+  state.questionId = 0;
+  state.isLoading = false;
+  render();
+};
 
 // --- Render Function ---
 function render() {
