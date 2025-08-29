@@ -12,8 +12,9 @@ export function Congrats({ correctAnswered }) {
                     Congrats! You completed the quiz
                 </div>
                 <div class="congrats-score">You answer ${correctAnswered}/10 correctly</div>
-                <button class="play-again-button" onclick="handleRestart()">
-                    Play Again
+                <input type="text" id="playerNameInput" class="player-name-input" placeholder="Enter your name" />
+                <button class="play-again-button" onclick="handleSaveAndRestart()">
+                    Save and Play Again
                 </button>
             </div>
         </div>

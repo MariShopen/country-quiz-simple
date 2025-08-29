@@ -96,6 +96,20 @@ window.handleRestart = async () => {
   render();
 };
 
+window.handleSaveAndRestart = async () => {
+  const correctAnswered = state.quizQuestions.filter(
+    (q) => q.options.answered === q.options.correct
+  ).length;
+  const playerNameInput = document.getElementById("playerNameInput");
+  const playerName =
+    (playerNameInput ? playerNameInput.value.trim() : "") || "hero";
+
+  // saveGameResult(correctAnswered, playerName);
+
+  // Now restart the game
+  await handleRestart();
+};
+
 // --- Render Function ---
 function render() {
   const { isLoading, quizQuestions, questionId } = state;

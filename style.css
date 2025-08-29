@@ -209,6 +209,30 @@ body {
   font-weight: 600; /* font-semibold */
 }
 
+.player-name-input {
+  background-color: var(--blue-3);
+  color: var(--font-color);
+  border: 2px solid var(--blue-3);
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  width: 18rem; /* w-72 */
+  margin: 1.25rem 0; /* m-5 vertical */
+  text-align: center;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease-in-out;
+}
+
+.player-name-input::placeholder {
+  color: #a0a0a0;
+}
+
+.player-name-input:focus {
+  outline: none;
+  border-color: var(--gradient-1);
+}
+
 .play-again-button {
   background-image: linear-gradient(
     to right,
