@@ -4,7 +4,7 @@ A fun and interactive quiz to test your geography knowledge by guessing a countr
 
 ## Live Demo
 
-*([https://marishopen.github.io/country-quiz-simple/])*
+*https://marishopen.github.io/country-quiz-simple/*
 
 ## Features
 
@@ -28,38 +28,9 @@ A fun and interactive quiz to test your geography knowledge by guessing a countr
 This project was developed as part of an assignment with the following requirements:
 
 *   Be built only using **HTML, CSS and vanilla JavaScript**.
-*   **Not use external libraries** (e.g. Bootstrap, React, Jekyll themes).
-*   Be **original and engaging** (e.g. not made solely using a tutorial, but it can be inspired by existing games).
-*   **Actually work!** The game must be fully playable once deployed.
+*   **Not use external libraries** 
 
 ---
-
-## How to Run Locally
-
-To run this project on your local machine, follow these steps:
-
-1.  **Clone the repository:**
-    ```bash
-    git clone https://github.com/your-username/country-quiz-vanilla.git
-    ```
-
-2.  **Navigate to the project directory:**
-    ```bash
-    cd country-quiz-vanilla
-    ```
-
-3.  **Open the project with a local server:**
-
-    Since this project uses ES6 Modules (`import`/`export`), you need to serve the files from a local web server to avoid CORS errors. The easiest way to do this is with the **Live Server** extension in Visual Studio Code.
-
-    Alternatively, you can use Python's built-in server:
-
-    ```bash
-    # If you have Python 3.x
-    python -m http.server
-    ```
-
-    Then, open your browser and go to `http://localhost:8000` (or the address provided by Live Server).
 
 ## File Structure
 
