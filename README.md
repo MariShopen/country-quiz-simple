@@ -4,7 +4,7 @@ A fun and interactive quiz to test your geography knowledge by guessing a countr
 
 ## Live Demo
 
-*[Link to your deployed game will go here]*
+*([https://marishopen.github.io/country-quiz-simple/])*
 
 ## Features
 
